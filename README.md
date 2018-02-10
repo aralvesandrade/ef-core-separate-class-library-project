@@ -1,5 +1,23 @@
 Using EF Core in a Separate Class Library project
 
+## Adicionando SQL Server
+
+Graças ao `Docker`, é super rápido e fácil de começar com isso. Do terminal, vamos baixar e executar uma nova instância do SQL Server para Linux como um novo container `Docker`.
+
+```
+docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=SqlExpress123' -e 'MSSQL_PID=Express' -p 1433:1433 --name sqlexpress -d microsoft/mssql-server-linux
+```
+
+Verificar se o container `Docker` do SQL Server `sqlexpress` está no ar:
+
+```
+docker ps -a
+```
+
+## Criando os projetos .Net
+
+A partir do terminal `Windows PowerShell`, `Git Bash` ou próprio `Prompt de Comando` do `Windows`, vamos criar os diretorios dos projetos:
+
 ```
 mkdir hubMarket
 cd hubMarket
@@ -86,4 +104,152 @@ Adicionando referencia ao projeto `hubMarket-console`:
 
 ```
 dotnet add reference ../hubMarket-app/hubMarket-app.csproj
+```
+
+Criar arquivo no projeto `hubMarket-domain` com o nome `User.cs`:
+
+```c#
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace hubMarket_domain
+{
+    [Table("User")]
+    public class User
+    {
+        public int Id { get; set; }
+        [Required]
+        public string Login { get; set; }
+        [Required]
+        public string Password { get; set; }
+    }
+}
+```
+
+Criar arquivo no projeto `hubMarket-data` com o nome `Context.cs`:
+
+```c#
+using System;
+using hubMarket_domain;
+using Microsoft.EntityFrameworkCore;
+
+namespace hubMarket_data
+{
+    public class Context: DbContext
+    {
+        public Context()
+        {
+        
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Data Source=localhost;Initial Catalog=hubMarket;User ID=sa;Password=SqlExpress123;");
+        }
+
+        public DbSet<User> Users { get; set; }
+    }
+}
+```
+
+Criar arquivo no projeto `hubMarket-app` com o nome `UserApp.cs`:
+
+```c#
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using hubMarket_data;
+using hubMarket_domain;
+
+namespace hubMarket_app
+{
+    public class UserApp
+    {
+        private readonly Context _context;
+
+        public UserApp()
+        {
+            _context = new Context();
+        }
+
+        public void Add(User user)
+        {
+            _context.Users.Add(user);
+            _context.SaveChanges();
+        }
+
+        public List<User> GetAll()
+        {
+            return _context.Users.ToList();
+        }
+    }
+}
+```
+
+Editar metodo `Main` do arquivo `Program.cs`, deixando assim:
+
+```c#
+using System;
+using hubMarket_app;
+using hubMarket_domain;
+
+namespace hubMarket_console
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var userApp = new UserApp();
+
+            userApp.Add(new User { Login = "Teste1", Password = "123" });
+            userApp.Add(new User { Login = "Teste2", Password = "123" });
+            userApp.Add(new User { Login = "Teste3", Password = "123" });
+
+            var users = userApp.GetAll();
+
+            foreach (var item in users)
+            {
+                Console.WriteLine($"Login: {item.Id}-{item.Login}");
+            }
+
+            Console.ReadLine();
+
+        }
+    }
+}
+```
+
+Dropar tabela usando `dotnet ef`, caso existir:
+
+```
+cd hubMarket-data
+dotnet ef --startup-project ../hubMarket-console database drop
+```
+
+Adicionar o `migrations` ao projeto:
+
+```
+dotnet ef --startup-project ../hubMarket-console migrations add Init
+```
+
+Agora vamos criar o banco de dados `hubMarket` e suas respectivas tabelas:
+
+```
+dotnet ef --startup-project ../hubMarket-console database update
+```
+
+Agora vamos compilar o projeto e depois executar:
+
+```
+cd hubMarket
+dotnet build
+dotnet run --project hubMarket-console/
+```
+
+Pronto, devera mostrar na tela o resultado abaixo:
+
+```
+Login: 1-Teste1
+Login: 2-Teste2
+Login: 3-Teste3
 ```
