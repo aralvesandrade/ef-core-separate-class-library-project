@@ -38,7 +38,6 @@ mkdir hubMarket-domain
 mkdir hubMarket-data
 mkdir hubMarket-app
 mkdir hubMarket-console
-mkdir hubMarket-web
 cd hubMarket-domain
 dotnet new classlib
 cd..
@@ -51,9 +50,6 @@ cd..
 cd hubMarket-console
 dotnet new console
 cd..
-cd hubMarket-web
-dotnet new mvc
-cd..
 ```
 
 Adicionar projetos a solution principal `hubMarket`:
@@ -63,7 +59,6 @@ dotnet sln add hubMarket-domain/hubMarket-domain.csproj
 dotnet sln add hubMarket-data/hubMarket-data.csproj
 dotnet sln add hubMarket-app/hubMarket-app.csproj
 dotnet sln add hubMarket-console/hubMarket-console.csproj
-dotnet sln add hubMarket-web/hubMarket-web.csproj
 ```
 
 Adicionando package aos projetos `hubMarket-domain` e `hubMarket-data`:
