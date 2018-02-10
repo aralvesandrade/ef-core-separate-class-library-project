@@ -1,4 +1,8 @@
-Using EF Core in a Separate Class Library project
+## Using EF Core in a Separate Class Library project
+
+Nesse projeto iremos utilizar `Docker` para subir um container do `SQL Express` e criar um projeto utilizando `Entity Framework Core` em classes de bibliotecas separadas, iremos aprender a fazer as referencias entre os projetos, depois iremos utilizar o `migrations` para criar o banco de dados e suas respectivas tabelas.
+
+Boa codificacao!
 
 ## Adicionando SQL Server
 
@@ -57,6 +61,10 @@ dotnet sln add hubMarket-web/hubMarket-web.csproj
 Adicionando package aos projetos `hubMarket-domain` e `hubMarket-data`:
 
 ```
+cd hubMarket-domain
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+cd..
+cd hubMarket-data
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 ```
 
@@ -218,6 +226,8 @@ namespace hubMarket_console
     }
 }
 ```
+
+## Trabalhando com Entity Framework Core
 
 Dropar tabela usando `dotnet ef`, caso existir:
 
