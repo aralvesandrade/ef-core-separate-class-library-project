@@ -4,6 +4,14 @@ Nesse projeto iremos utilizar `Docker` para subir um container do `SQL Express` 
 
 Boa codificacao!
 
+## Pré-requisitos
+
+Precisa ter instalado os pacotes abaixo:
+
+Docker
+.NET Core 2.1.4 SDK
+Visual Studio Code
+
 ## Adicionando SQL Server
 
 Graças ao `Docker`, é super rápido e fácil de começar com isso. Do terminal, vamos baixar e executar uma nova instância do SQL Server para Linux como um novo container `Docker`.
