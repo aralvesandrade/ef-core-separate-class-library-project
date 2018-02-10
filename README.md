@@ -75,6 +75,8 @@ Adicionando package ao projeto `hubMarket-data`:
 
 ```
 dotnet add package Microsoft.EntityFrameworkCore.Design --version 2.0.0
+cd..
+code .
 ```
 
 Editar o arquivo `hubMarket-data.csproj`, deixando igual abaixo:
@@ -101,12 +103,15 @@ Editar o arquivo `hubMarket-data.csproj`, deixando igual abaixo:
 Adicionando referencia ao projeto `hubMarket-data`:
 
 ```
+cd hubMarket-data
 dotnet add reference ../hubMarket-domain/hubMarket-domain.csproj
 ```
 
 Adicionando referencia ao projeto `hubMarket-app`:
 
 ```
+cd..
+cd hubMarket-app
 dotnet add reference ../hubMarket-domain/hubMarket-domain.csproj
 dotnet add reference ../hubMarket-data/hubMarket-data.csproj
 ```
@@ -114,10 +119,21 @@ dotnet add reference ../hubMarket-data/hubMarket-data.csproj
 Adicionando referencia ao projeto `hubMarket-console`:
 
 ```
+cd..
+cd hubMarket-console
 dotnet add reference ../hubMarket-app/hubMarket-app.csproj
+cd..
 ```
 
-Criar arquivo no projeto `hubMarket-domain` com o nome `User.cs`:
+Fechar o `Visual Studio Code` e pelo terminal executar os comandos abaixo:
+
+```
+dotnet restore
+dotnet build
+code .
+```
+
+Com o `Visual Studio Code` aberto renomear arquivo `Class1.cs` do projeto `hubMarket-domain` para `User.cs`:
 
 ```c#
 using System.ComponentModel.DataAnnotations;
@@ -137,7 +153,7 @@ namespace hubMarket_domain
 }
 ```
 
-Criar arquivo no projeto `hubMarket-data` com o nome `Context.cs`:
+Renomear arquivo `Class1.cs` do projeto `hubMarket-data` com o nome `Context.cs`:
 
 ```c#
 using System;
@@ -163,7 +179,7 @@ namespace hubMarket_data
 }
 ```
 
-Criar arquivo no projeto `hubMarket-app` com o nome `UserApp.cs`:
+Renomear arquivo `Class1.cs` do projeto `hubMarket-app` com o nome `UserApp.cs`:
 
 ```c#
 using System;
