@@ -8,9 +8,9 @@ Boa codificacao!
 
 Precisa ter instalado os pacotes abaixo:
 
-Docker
-.NET Core 2.1.4 SDK
-Visual Studio Code
+- Docker
+- .NET Core 2.1.4 SDK
+- Visual Studio Code
 
 ## Adicionando SQL Server
 
