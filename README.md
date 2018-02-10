@@ -78,6 +78,7 @@ dotnet add package Microsoft.EntityFrameworkCore.Design --version 2.0.0
 cd..
 cd hubMarket-console
 dotnet add package Microsoft.EntityFrameworkCore.Design --version 2.0.0
+cd..
 code .
 ```
 
