@@ -71,11 +71,13 @@ cd hubMarket-data
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 ```
 
-Adicionando package ao projeto `hubMarket-data`:
+Adicionando package ao projeto `hubMarket-data` e `hubMarket-console`:
 
 ```
 dotnet add package Microsoft.EntityFrameworkCore.Design --version 2.0.0
 cd..
+cd hubMarket-console
+dotnet add package Microsoft.EntityFrameworkCore.Design --version 2.0.0
 code .
 ```
 
@@ -251,6 +253,9 @@ namespace hubMarket_console
 Dropar tabela usando `dotnet ef`, caso existir:
 
 ```
+cd..
+dotnet restore
+dotnet build
 cd hubMarket-data
 dotnet ef --startup-project ../hubMarket-console database drop
 ```
@@ -270,7 +275,7 @@ dotnet ef --startup-project ../hubMarket-console database update
 Agora vamos compilar o projeto e depois executar:
 
 ```
-cd hubMarket
+cd..
 dotnet build
 dotnet run --project hubMarket-console/
 ```
