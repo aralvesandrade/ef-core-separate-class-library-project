@@ -71,7 +71,7 @@ cd hubMarket-data
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 ```
 
-Adicionando package ao projeto `hubMarket-data` e `hubMarket-console`:
+Adicionando package ao projeto `hubMarket-data`:
 
 ```
 dotnet add package Microsoft.EntityFrameworkCore.Design --version 2.0.0
